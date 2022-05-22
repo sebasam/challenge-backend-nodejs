@@ -25,7 +25,7 @@ const getCharacters = async(req, res = response) => {
 
 //crear personajes
 const createCharacter = async(req, res = response) => {
-    const { image, name, age, weight, history } = req.body
+    const { image, name, age, weight, history, movieId } = req.body
     try{
         const [character, created] = await Character.findOrCreate({
             where: { name: name },
@@ -34,7 +34,8 @@ const createCharacter = async(req, res = response) => {
                 name,
                 age,
                 weight,
-                history
+                history, 
+                movieId
             }
         })
         if(!created) return res.status(400).json({
@@ -57,12 +58,12 @@ const createCharacter = async(req, res = response) => {
 const getCharacter = async(req, res = response) => {
     try{
         const info = await Character.findAll({
-            where: { id: req.params.id },
-            include: {
-                 model: Movie,
-                 as: 'movies',
-                 attributes: ['title']                 
-            },
+            where: { id: req.params.id }
+            // include: {
+            //      model: Movie,
+            //      as: 'movies',
+            //      attributes: ['title']                 
+            // },
         })
         return res.json({
             info
@@ -113,11 +114,6 @@ const deleteCharacter = async(req, res = response) => {
         console.log(error)
     }
 }
-
-//Crear genero
-
-
-
 
 
 module.exports = {

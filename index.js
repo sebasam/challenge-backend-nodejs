@@ -22,11 +22,13 @@ app.use('/', api)
 //port
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
-
-    sequelize.sync({ force: false }).then(() => {
-        console.log('database connected')
-    }).catch((error) => {
-        console.log(error)
-        console.log('Database cannot connected')
-    })   
+    
+    sequelize.query('SET FOREIGN_KEY_CHECKS = 0', {raw: true}).then(() => {
+        sequelize.sync({ force: false }).then(() => {
+            console.log('database connected')
+        }).catch((error) => {
+            console.log(error)
+            console.log('Database cannot connected')
+        })   
+    })    
 })

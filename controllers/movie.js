@@ -12,9 +12,7 @@ const createMovie = async(req, res = response) => {
                 image,
                 title,
                 date,
-                score,
-                characterId,
-                genreId
+                score
             }
         })
         if(!created) return res.status(400).json({
@@ -56,12 +54,7 @@ const getMovie = async(req, res = response) => {
     try{
         const movie = await Movie.findAll({
             where: { id: req.params.id },
-            attributes: ['title', 'image', 'date', 'score'],
-            include: {
-                model: Character,
-                as: 'characters',
-                attributes: ['name']
-            }
+            attributes: ['title', 'image', 'date', 'score']
         })
         res.json({
             movie

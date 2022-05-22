@@ -2,13 +2,19 @@ const character = require('../models/Character')
 const movie = require('../models/Movie')
 const genre = require('../models/Genre')
 
-character.hasMany(movie, { as: 'movies', foreignKey: 'characterId' })
+movie.hasMany(character)
 
-movie.belongsTo(character, {as: 'characters', foreignKey: 'characterId' })
+character.belongsTo(movie)
 
-genre.hasMany(movie, { as: 'movies', foreignKey: 'genreId' })
+movie.hasMany(genre)
 
-movie.belongsTo(genre, { as: 'genre' })
+genre.belongsTo(movie)
+
+// Character.belongsToMany(Movie, { through: 'characterId' })
+// Movie.belongsToMany(Character, { through: 'characterId' })
+
+// Genre.belongsToMany(Movie, { through: 'genreId' })
+// Movie.belongsToMany(Genre, { through: 'genreId' })
 
 
 
