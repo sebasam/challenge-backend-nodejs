@@ -3,13 +3,14 @@ const Genre = require('../models/Genre')
 
 //crear pelicula
 const createGenre = async(req, res = response) => {
-    const { image, name } = req.body
+    const { image, name, movieId } = req.body
     try{
         const [genre, created] = await Genre.findOrCreate({
             where: { name: name },
             defaults: {
                 image,
-                name
+                name,
+                movieId
             }
         })
         if(!created) return res.status(400).json({

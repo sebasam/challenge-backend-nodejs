@@ -58,12 +58,13 @@ const createCharacter = async(req, res = response) => {
 const getCharacter = async(req, res = response) => {
     try{
         const info = await Character.findAll({
-            where: { id: req.params.id }
-            // include: {
-            //      model: Movie,
-            //      as: 'movies',
-            //      attributes: ['title']                 
-            // },
+            where: { id: req.params.id },
+            attributes: ['image', 'name', 'age', 'weight', 'history'],
+            include: {
+                  model: Movie,
+                  as: 'movies',
+                  attributes: ['title']                
+            },
         })
         return res.json({
             info
