@@ -1,11 +1,11 @@
-const { response } = require('express')
+const { response, query } = require('express')
 const Movie = require('../models/Movie')
 const Character = require('../models/Character')
 const Genre = require('../models/Genre')
 
 //crear pelicula
 const createMovie = async(req, res = response) => {
-    const { image, title, date, score, characterId, genreId } = req.body
+    const { image, title, date, score, genreId } = req.body
     try{
         const [movie, created] = await Movie.findOrCreate({
             where: { title: title },
@@ -13,7 +13,8 @@ const createMovie = async(req, res = response) => {
                 image,
                 title,
                 date,
-                score
+                score,
+                genreId
             }
         })
         if(!created) return res.status(400).json({
@@ -32,15 +33,62 @@ const createMovie = async(req, res = response) => {
     }
 }
 
+
 //obtener peliculas
 const getMovies = async(req, res = response) => {
-    try{
+    const { title, genre, order } = req.query
+    try{      
+        let queryFind = {}
+        let titleOrder = []
+        if(title){
+            const movie = await Movie.findAll({
+                where: { title: title },
+                attributes: ['id', 'image', 'title', 'date']
+            })
+            return res.json({
+                movie
+            })
+        }
+        if(genre){
+            const movie = await Movie.findAll({
+                where: { genreId: genre },
+                attributes: ['id', 'image', 'title', 'date']
+            })
+            return res.json({
+                movie
+            })
+        }
+        if(order){
+            if(order === 'ASC'){
+                titleOrder.push(['date', 'ASC'])
+                const movie = await Movie.findAll({
+                    order: titleOrder,
+                    attributes: ['id', 'image', 'title', 'date']
+                })
+                return res.json({
+                    movie
+                })
+            }else{
+                titleOrder.push(['date', 'DESC'])
+                const movie = await Movie.findAll({
+                    order: titleOrder,
+                    attributes: ['id', 'image', 'title', 'date']
+                })
+                return res.json({
+                    movie
+                })
+            }
+        }       
+
         const movies = await Movie.findAll({
             attributes: ['title', "date", "image"]                                  
         })
+        
         return res.json({
             movies
         })
+
+
     }catch(error){
         console.log(error)
         return res.json({
@@ -56,11 +104,18 @@ const getMovie = async(req, res = response) => {
         const movie = await Movie.findAll({
             where: { id: req.params.id },
             attributes: ['title', 'image', 'date', 'score'],
-            include: {
-                model: Character,
-                as: 'characters',
-                attributes: ['name', 'history']
-            }
+            include: [
+                {
+                    model: Character,
+                    as: 'characters',
+                    attributes: ['name', 'history']
+                },
+                {
+                    model: Genre,
+                    as: 'genres',
+                    attributes: ['name']
+                },
+            ]
         })
         res.json({
             movie
@@ -115,5 +170,5 @@ module.exports = {
     getMovies,
     getMovie,
     updateMovie,
-    deleteMovie
+    deleteMovie,
 }

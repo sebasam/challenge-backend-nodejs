@@ -6,6 +6,6 @@ movie.hasMany(character, { as: 'characters', foreignKey: 'movieId' })
 
 character.belongsTo(movie, { as:'movies', foreignKey: 'movieId' })
 
-movie.hasMany(genre, { as:'genres', foreignKey: 'movieId' })
+genre.hasMany(movie, { as:'genres', foreignKey: 'genreId' })
 
-genre.belongsTo(movie,{ foreignKey:'movieId' })
+movie.belongsTo(genre,{ as: 'genres', foreignKey:'genreId' })
