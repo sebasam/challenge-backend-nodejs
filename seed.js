@@ -6,12 +6,6 @@ const Genre = require('./models/Genre')
 require('./db/associations')
 
 
-const users = [
-    { username: "laura quimbaya", email: "cami@gmail.com", password: "Chafa3112%" },
-    { usernam: "sebas amaya", email: "sebas@gmail.com", password: "Chafa3112%" },
-    { username: "eren jaeger", email: "eren@gmail.com", password: "Chafa3112%" }
-]
-
 const genres = [
     { name: "Fantasía", image: "https://i0.wp.com/www.julianmarquina.es/wp-content/uploads/Libros-y-fantasia-2.png?resize=960%2C441&ssl=1" },
     { name: "Drama", image: "https://definicion.de/wp-content/uploads/2009/04/drama.png" },
@@ -24,29 +18,25 @@ const movies = [
         image: 'https://phantom-marca.unidadeditorial.es/598faa8b05f1ffe50a25e79e29921701/resize/1320/f/jpg/assets/multimedia/imagenes/2021/08/18/16292903643922.jpg',
         title: 'La sirenita',
         date: '1837/04/07',
-        score: 3,
-        genreId: 1
+        score: 3
     },
     { 
         image: 'https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/1F1D010AEB22B06D241D97EB7CF3A7ABE290452BAA240838A6EC8E6DD896F01B/scale?width=1200&aspectRatio=1.78&format=jpeg',
         title: 'Tierra de osos',
         date: '2003/10/24',
-        score: 4,
-        genreId: 2
+        score: 4
     },
     { 
         image: 'https://r1.abcimg.es/resizer/resizer.php?imagen=https%3A%2F%2Fstatic1.abc.es%2Fmedia%2Fpeliculas%2F000%2F025%2F460%2Fmulan-2.jpg&nuevoancho=620&medio=abc',
         title: 'Mulan',
         date: '1998/06/05',
-        score: 5,
-        genreId: 3
+        score: 5
     },
     { 
         image: 'https://static.wikia.nocookie.net/disney/images/6/63/Disney-tarzan.jpg/revision/latest?cb=20160923002241&path-prefix=es',
         title: 'Tarzan',
         date: '1999/06/18',
-        score: 5,
-        genreId: 4
+        score: 5
     }
 ]
 
@@ -120,8 +110,6 @@ const characters = [
 
 sequelize.sync({ force: true }).then(() => {
     console.log('Database is connect')
-}).then(() => {
-    users.forEach(user => User.create(user))
 }).then(() => {
     genres.forEach(genre => Genre.create(genre))
 }).then(() => {

@@ -9,3 +9,6 @@ character.belongsTo(movie, { as:'movies', foreignKey: 'movieId' })
 genre.hasMany(movie, { as:'genres', foreignKey: 'genreId' })
 
 movie.belongsTo(genre,{ as: 'genres', foreignKey:'genreId' })
+
+// movie.belongsToMany(genre, { through: 'genreMovies', as: 'genres' })
+// genre.belongsToMany(movie, { through: 'genreMovies', as: 'movie' })

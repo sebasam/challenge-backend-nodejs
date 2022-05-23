@@ -1,7 +1,9 @@
+
 const { response } = require('express')
 const User  = require('../models/User')
 const bcrypt = require('bcryptjs')
 const generateJWT = require('../helpers/jwt')
+const sgMail = require('@sendgrid/mail')
 
 //register user
 const createUser = async(req, res = response) => {
@@ -27,6 +29,16 @@ const createUser = async(req, res = response) => {
 
         //generate JWT
         const token = await generateJWT(user.id, username)
+
+        sgMail.setApiKey(process.env.API_KEY)
+        const message = {
+            to: user.email,
+            from: process.env.MY_EMAIL,
+            subject: 'Your register has been success',
+            text: 'Welcome to Disney API'
+        }
+
+        await sgMail.send(message)
 
         await user.update({
             password: user.password
