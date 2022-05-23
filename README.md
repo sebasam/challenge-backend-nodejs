@@ -127,8 +127,11 @@ En la carpeta postman encontrará los respectivos endpoints con sus pruebas.
 ## Ejemplo archivo .env
 
 PORT=puerto para correr el programa
+
 SECRET_JWT_SEED=firma para el jsonwebtoken (Pueden ser caracteres al azar)
+
 API_KEY=tomada de send grid para enviar los emails
+
 MY_EMAIL=email inscrito en send grid que permite enviar el email sin devolver el error 403
 
 ## Base de datos para realizar pruebas con personajes, películas y géneros
