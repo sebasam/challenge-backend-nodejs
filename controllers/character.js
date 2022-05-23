@@ -7,7 +7,40 @@ const Genre = require('../models/Genre')
 
 //Obtener personajes
 const getCharacters = async(req, res = response) => {
+    const { name, age, idMovie } = req.query
     try{
+        if(name){
+            const character = await Character.findAll({
+                where: { name: name },
+                attributes: ['name', 'history']
+            })
+            return res.json({
+                character
+            })
+        }
+        if(age){
+            const character = await Character.findAll({
+                where: { age: age },
+                attributes: ['name', 'history']
+            })
+            return res.json({
+                character
+            })
+        }
+        if(idMovie){
+            const movie = await Movie.findAll({
+                where: { id: idMovie },
+                attributes: ['title'],
+                include: {
+                    model: Character,
+                    as: 'characters',
+                    attributes: ['name', 'history']
+                }
+            })
+            return res.json({
+                movie
+            })
+        }
         const character = await Character.findAll({
             attributes: ['name', 'image' ]
         })

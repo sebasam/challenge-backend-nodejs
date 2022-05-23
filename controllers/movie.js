@@ -38,7 +38,6 @@ const createMovie = async(req, res = response) => {
 const getMovies = async(req, res = response) => {
     const { title, genre, order } = req.query
     try{      
-        let queryFind = {}
         let titleOrder = []
         if(title){
             const movie = await Movie.findAll({
