@@ -1,5 +1,7 @@
 const { Router } = require('express')
 const { createMovie, getMovies, getMovie, updateMovie, deleteMovie } = require('../controllers/movie')
+const { check } = require('express-validator')
+const validateFields = require('../middlewares/validate-fields')
 const router = Router()
 
 //crear película

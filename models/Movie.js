@@ -11,7 +11,7 @@ Movie.init({
     image: DataTypes.STRING,
     title: DataTypes.STRING,
     date: DataTypes.DATE,
-    score: DataTypes.INTEGER
+    score: DataTypes.INTEGER,    
 }, {
     sequelize,
     modelName: 'Movie',

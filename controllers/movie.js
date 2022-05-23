@@ -9,7 +9,7 @@ const createMovie = async(req, res = response) => {
     try{
         const [movie, created] = await Movie.findOrCreate({
             where: { title: title },
-            defaults: {
+            defaults: { 
                 image,
                 title,
                 date,
